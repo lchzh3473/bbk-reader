@@ -1,25 +1,25 @@
 const sources = [
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之文学.MSG', //中国文化之文学
-  'http://down.eebbk.net/xzza/y100/时事政治.MSG', //时事政治
-  'http://down.eebbk.net/xzzx/y100/3/从黄冈中学走向北大清华.MSP', //从黄冈中学走向北大清华
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之神话传说.MSG', //中国文化之神话传说
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之民族节日.MSG', //中国文化之民族节日
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之民俗文化.MSG', //中国文化之民俗文化
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之古代科技.MSG', //中国文化之古代科技
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之古代建筑.MSG', //中国文化之古代建筑
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之典章制度.MSG', //中国文化之典章制度
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之当代中国.MSG', //中国文化之当代中国
-  'http://down.eebbk.net/xzzx/y100/3/世界知识.MSG', //世界知识
-  'http://down.eebbk.net/xzzx/y100/3/绘画知识.MSG', //绘画知识
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之语言文字.MSG', //中国文化之语言文字
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之艺术.MSG', //中国文化之艺术
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之文化典籍.MSG', //中国文化之文化典籍
-  'http://down.eebbk.net/xzzx/y100/3/中国文化之思想学术.MSG', //中国文化之思想学术
-  'http://down.eebbk.net/xzza/y100/地理名胜.MSP', //地理名胜
-  'http://down.eebbk.net/xzzx/y100/3/数学故事.MSP', //数学故事
-  'http://down.eebbk.net/xzzx/y100/3/英语赏析.MSG', //英语赏析
-  'http://down.eebbk.net/xzzx/y100/3/历史年表资料.MSP', //历史年表资料
-  'http://down.eebbk.net/xzza/y100/法律常识.MSG' //法律常识
+  '//down.eebbk.net/xzzx/y100/3/中国文化之文学.MSG', //中国文化之文学
+  '//down.eebbk.net/xzza/y100/时事政治.MSG', //时事政治
+  '//down.eebbk.net/xzzx/y100/3/从黄冈中学走向北大清华.MSP', //从黄冈中学走向北大清华
+  '//down.eebbk.net/xzzx/y100/3/中国文化之神话传说.MSG', //中国文化之神话传说
+  '//down.eebbk.net/xzzx/y100/3/中国文化之民族节日.MSG', //中国文化之民族节日
+  '//down.eebbk.net/xzzx/y100/3/中国文化之民俗文化.MSG', //中国文化之民俗文化
+  '//down.eebbk.net/xzzx/y100/3/中国文化之古代科技.MSG', //中国文化之古代科技
+  '//down.eebbk.net/xzzx/y100/3/中国文化之古代建筑.MSG', //中国文化之古代建筑
+  '//down.eebbk.net/xzzx/y100/3/中国文化之典章制度.MSG', //中国文化之典章制度
+  '//down.eebbk.net/xzzx/y100/3/中国文化之当代中国.MSG', //中国文化之当代中国
+  '//down.eebbk.net/xzzx/y100/3/世界知识.MSG', //世界知识
+  '//down.eebbk.net/xzzx/y100/3/绘画知识.MSG', //绘画知识
+  '//down.eebbk.net/xzzx/y100/3/中国文化之语言文字.MSG', //中国文化之语言文字
+  '//down.eebbk.net/xzzx/y100/3/中国文化之艺术.MSG', //中国文化之艺术
+  '//down.eebbk.net/xzzx/y100/3/中国文化之文化典籍.MSG', //中国文化之文化典籍
+  '//down.eebbk.net/xzzx/y100/3/中国文化之思想学术.MSG', //中国文化之思想学术
+  '//down.eebbk.net/xzza/y100/地理名胜.MSP', //地理名胜
+  '//down.eebbk.net/xzzx/y100/3/数学故事.MSP', //数学故事
+  '//down.eebbk.net/xzzx/y100/3/英语赏析.MSG', //英语赏析
+  '//down.eebbk.net/xzzx/y100/3/历史年表资料.MSP', //历史年表资料
+  '//down.eebbk.net/xzza/y100/法律常识.MSG' //法律常识
 ];
 const params = new URLSearchParams(location.search);
 const src = sources[params.get('src') || 0];
