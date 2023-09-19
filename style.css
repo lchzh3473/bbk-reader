@@ -4,18 +4,28 @@ div {
   font-size: 1.33em;
   line-height: 2;
   padding: 1em;
-  color: rgb(51, 51, 51);
+  color: #333;
   margin: 1em;
   border-radius: 1em;
-  box-shadow: rgb(204, 204, 204) 0px 0px 1em;
+  box-shadow: #ccc 0px 0px 1em;
   max-width: 854px;
   margin: 1em auto;
 }
 
-h1 {
-  font-size: 2em;
-  margin: 0.5em 0;
+.header,
+.footer {
+  height: 3em;
   text-align: center;
+}
+
+.header>h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.page {
+  height: calc(100vh - 16em);
+  overflow: auto;
 }
 
 p {
@@ -33,4 +43,24 @@ img {
 p>img {
   margin: 0;
   display: inline-block;
+}
+
+.footer>a {
+  color: #00395a;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 1em;
+  background-color: #00ceff;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+.footer>a:hover {
+  color: #a54900;
+  background-color: #ffe33a;
+}
+
+.footer>a:active {
+  color: #fff;
+  background-color: #ef313a;
 }

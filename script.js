@@ -25,11 +25,24 @@ const catalog = sources.map(a => a.split('/').pop().split('.')[0]);
 const params = new URLSearchParams(location.search);
 const path = params.get('path');
 async function main() {
+  const headerEl = document.createElement('div');
+  headerEl.classList.add('header');
+  document.body.appendChild(headerEl);
   const pageEl = document.createElement('div');
+  pageEl.classList.add('page');
+  document.body.appendChild(pageEl);
+  const footerEl = document.createElement('div');
+  footerEl.classList.add('footer');
+  const footerBtns = [];
+  if (path != null && path !== '') {
+    footerBtns.push({ name: '返回', path: path.split('.').slice(0, -1).join('.') });
+  }
+  footerEl.innerHTML = footerBtns.map(a => `<a href="?path=${a.path}">${a.name}</a>`).join('');
+  document.body.appendChild(footerEl);
   if (path == null || path === '') {
     const maps = catalog.map((a, i) => (params.set('path', i), `<li><a href="?${params.toString()}">${a}</a></li>`));
-    pageEl.innerHTML = `<h1>目录</h1><p><ul>${maps.join('')}</ul></p>`;
-    document.body.appendChild(pageEl);
+    headerEl.innerHTML = `<h1>精品阅读</h1>`;
+    pageEl.innerHTML = `<p><ul>${maps.join('')}</ul></p>`;
     return;
   }
   const src = sources[path.split('.')[0]];
@@ -87,7 +100,8 @@ async function main() {
   const subPath = path.split('.').slice(1).join('.');
   if (subPath === '') {
     const maps = pages.map((a, i) => (params.set('path', `${path}.${i}`), `<li><a href="?${params.toString()}">${a.title}</a></li>`));
-    pageEl.innerHTML = `<h1>${name}</h1><p><ul>${maps.join('')}</ul></p>`;
+    headerEl.innerHTML = `<h1>${name}</h1>`;
+    pageEl.innerHTML = `<p><ul>${maps.join('')}</ul></p>`;
   } else {
     const page = getSubPage(pages, subPath);
     if (page == null) {
@@ -96,9 +110,9 @@ async function main() {
       location.search = params.toString();
       return;
     }
+    headerEl.innerHTML = `<h1>${page.title}</h1>`;
     pageEl.innerHTML = getContent(page);
   }
-  document.body.appendChild(pageEl);
 
   function getImageFn() {
     if (imgStart === 0) return _i => null;
@@ -134,7 +148,7 @@ async function main() {
           params.set('path', `${path}.${i}`);
           return `<li><a href="?${params.toString()}">${a.title}</a></li>`;
         });
-        return `<h1>${page.title}</h1><p><ul>${maps.join('')}</ul></p>`;
+        return `<p><ul>${maps.join('')}</ul></p>`;
       }
       case 1: {
         const content = page.content
@@ -147,7 +161,7 @@ async function main() {
           .replace(/\ue104/g, '\u00b3')
           .replace(/\ue349/g, '\u571e')
           .replace(/\r/g, '');
-        return `<h1>${page.title}</h1>${content}`;
+        return `${content}`;
       }
       default:
         throw new Error('not implemented');
