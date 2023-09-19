@@ -1,33 +1,48 @@
 const sources = [
-  '//down.eebbk.net/xzzx/y100/3/中国文化之文学.MSG', //中国文化之文学
-  '//down.eebbk.net/xzza/y100/时事政治.MSG', //时事政治
-  '//down.eebbk.net/xzzx/y100/3/从黄冈中学走向北大清华.MSP', //从黄冈中学走向北大清华
-  '//down.eebbk.net/xzzx/y100/3/中国文化之神话传说.MSG', //中国文化之神话传说
-  '//down.eebbk.net/xzzx/y100/3/中国文化之民族节日.MSG', //中国文化之民族节日
-  '//down.eebbk.net/xzzx/y100/3/中国文化之民俗文化.MSG', //中国文化之民俗文化
-  '//down.eebbk.net/xzzx/y100/3/中国文化之古代科技.MSG', //中国文化之古代科技
-  '//down.eebbk.net/xzzx/y100/3/中国文化之古代建筑.MSG', //中国文化之古代建筑
-  '//down.eebbk.net/xzzx/y100/3/中国文化之典章制度.MSG', //中国文化之典章制度
-  '//down.eebbk.net/xzzx/y100/3/中国文化之当代中国.MSG', //中国文化之当代中国
-  '//down.eebbk.net/xzzx/y100/3/世界知识.MSG', //世界知识
-  '//down.eebbk.net/xzzx/y100/3/绘画知识.MSG', //绘画知识
-  '//down.eebbk.net/xzzx/y100/3/中国文化之语言文字.MSG', //中国文化之语言文字
-  '//down.eebbk.net/xzzx/y100/3/中国文化之艺术.MSG', //中国文化之艺术
-  '//down.eebbk.net/xzzx/y100/3/中国文化之文化典籍.MSG', //中国文化之文化典籍
-  '//down.eebbk.net/xzzx/y100/3/中国文化之思想学术.MSG', //中国文化之思想学术
-  '//down.eebbk.net/xzza/y100/地理名胜.MSP', //地理名胜
-  '//down.eebbk.net/xzzx/y100/3/数学故事.MSP', //数学故事
-  '//down.eebbk.net/xzzx/y100/3/英语赏析.MSG', //英语赏析
-  '//down.eebbk.net/xzzx/y100/3/历史年表资料.MSP', //历史年表资料
-  '//down.eebbk.net/xzza/y100/法律常识.MSG' //法律常识
+  '//down.eebbk.net/xzzx/y100/3/中国文化之文学.MSG',
+  '//down.eebbk.net/xzza/y100/时事政治.MSG',
+  '//down.eebbk.net/xzzx/y100/3/从黄冈中学走向北大清华.MSP',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之神话传说.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之民族节日.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之民俗文化.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之古代科技.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之古代建筑.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之典章制度.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之当代中国.MSG',
+  '//down.eebbk.net/xzzx/y100/3/世界知识.MSG',
+  '//down.eebbk.net/xzzx/y100/3/绘画知识.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之语言文字.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之艺术.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之文化典籍.MSG',
+  '//down.eebbk.net/xzzx/y100/3/中国文化之思想学术.MSG',
+  '//down.eebbk.net/xzza/y100/地理名胜.MSP',
+  '//down.eebbk.net/xzzx/y100/3/数学故事.MSP',
+  '//down.eebbk.net/xzzx/y100/3/英语赏析.MSG',
+  '//down.eebbk.net/xzzx/y100/3/历史年表资料.MSP',
+  '//down.eebbk.net/xzza/y100/法律常识.MSG' //
 ];
+const catalog = sources.map(a => a.split('/').pop().split('.')[0]);
 const params = new URLSearchParams(location.search);
-const src = sources[params.get('src') || 0];
+const path = params.get('path');
 async function main() {
+  const pageEl = document.createElement('div');
+  if (path == null || path === '') {
+    const maps = catalog.map((a, i) => (params.set('path', i), `<li><a href="?${params.toString()}">${a}</a></li>`));
+    pageEl.innerHTML = `<h1>目录</h1><p><ul>${maps.join('')}</ul></p>`;
+    document.body.appendChild(pageEl);
+    return;
+  }
+  const src = sources[path.split('.')[0]];
+  if (src == null) {
+    alert(path + ' not found (-1)');
+    params.delete('path');
+    location.search = params.toString();
+    return;
+  }
   const raw = await fetch(src).then(a => a.arrayBuffer());
   console.log(raw);
   const dataView = new DataView(raw);
-  const textDecoder = new TextDecoder('gb18030', { fatal: true });
+  const textDecoder = new TextDecoder('gb2312', { fatal: true });
   let globalOffset = 0;
   const uint32 = offset => {
     const ret = dataView.getUint32(offset, true);
@@ -50,7 +65,7 @@ async function main() {
   console.log('0x00-0x07', header1.toString(16).padStart(8, '0'), header2.toString(16).padStart(8, '0'));
   const size = uint32(globalOffset);
   console.log('size', size);
-  const format = getString(globalOffset, 12);
+  const format = getString(globalOffset, 12).replace(/\0+$/, '');
   console.log('format', format);
   const header3 = uint32(globalOffset);
   console.log('0x18-0x1b', header3.toString(16).padStart(8, '0'));
@@ -69,29 +84,15 @@ async function main() {
   const pages = readPages(pageSize);
   console.log('pages', pages);
   const getImage = getImageFn();
-  const path = params.get('path');
-  const pageEl = document.createElement('div');
-  if (path == null) {
-    // const maps = pages.map((a, i) => `<li><a href="?path=${i}">${a.title}</a></li>`);
-    const maps = pages.map((a, i) => {
-      params.set('path', i);
-      return `<li><a href="?${params.toString()}">${a.title}</a></li>`;
-    });
-    pageEl.innerHTML = `<h1>${name}</h1><p><ol>${maps.join('')}</ol></p>`;
+  const subPath = path.split('.').slice(1).join('.');
+  if (subPath === '') {
+    const maps = pages.map((a, i) => (params.set('path', `${path}.${i}`), `<li><a href="?${params.toString()}">${a.title}</a></li>`));
+    pageEl.innerHTML = `<h1>${name}</h1><p><ul>${maps.join('')}</ul></p>`;
   } else {
-    if (path === '') {
-      params.delete('path');
-      location.search = params.toString();
-      return;
-    }
-    const page = getSubPage(pages, path);
+    const page = getSubPage(pages, subPath);
     if (page == null) {
-      const lastIdx = path.lastIndexOf('/');
-      if (lastIdx === -1) {
-        params.delete('path');
-      } else {
-        params.set('path', path.slice(0, lastIdx));
-      }
+      alert(path + ' not found (-2)');
+      params.set('path', path.split('.').slice(0, -1).join('.'));
       location.search = params.toString();
       return;
     }
@@ -130,10 +131,10 @@ async function main() {
     switch (page.type) {
       case 0: {
         const maps = page.subPages.map((a, i) => {
-          params.set('path', `${path}/${i}`);
+          params.set('path', `${path}.${i}`);
           return `<li><a href="?${params.toString()}">${a.title}</a></li>`;
         });
-        return `<h1>${page.title}</h1><p><ol>${maps.join('')}</ol></p>`;
+        return `<h1>${page.title}</h1><p><ul>${maps.join('')}</ul></p>`;
       }
       case 1: {
         const content = page.content
@@ -141,10 +142,11 @@ async function main() {
             const url = getImage(i);
             return `<img src="${url}" />`;
           })
-          .replace(/^( *)(.*)$/gm, (_, a, b) => `<p style="text-indent:${a.length / 2}em">${b}</p>`)
-          .replace(/\r/g, '')
-          .replace(/\ue103/g, '²')
-          .replace(/\ue104/g, '³');
+          .replace(/^( *)(.*)$/gm, (_, a, b) => `<p style="text-indent:${format === 'MSP' ? a.length / 2 : a.length}em">${b}</p>`)
+          .replace(/\ue103/g, '\u00b2')
+          .replace(/\ue104/g, '\u00b3')
+          .replace(/\ue349/g, '\u571e')
+          .replace(/\r/g, '');
         return `<h1>${page.title}</h1>${content}`;
       }
       default:
@@ -154,10 +156,10 @@ async function main() {
 
   function getSubPage(pages, path) {
     if (pages == null) return null;
-    const [i, ...rest] = path.split('/');
+    const [i, ...rest] = path.split('.');
     if (rest.length === 0) return pages[i];
     if (pages[i] == null) return null;
-    return getSubPage(pages[i].subPages, rest.join('/'));
+    return getSubPage(pages[i].subPages, rest.join('.'));
   }
 
   function readPages(pageSize) {
