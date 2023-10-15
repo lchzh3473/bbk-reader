@@ -18,7 +18,7 @@ div {
   text-align: center;
 }
 
-.header>h1 {
+.header > h1 {
   font-size: 1.5em;
   margin: 0;
 }
@@ -34,18 +34,22 @@ p {
 }
 
 img {
-  display: block;
-  margin: 1em auto;
   max-width: 100%;
   max-height: 50vh;
 }
 
-p>img {
-  margin: 0;
-  display: inline-block;
+p[style='text-indent:0em'] > img {
+  display: block;
+  margin: 1em auto;
 }
 
-.footer>a {
+p > img {
+  margin: 0;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.footer > a {
   color: #00395a;
   text-decoration: none;
   display: inline-block;
@@ -55,12 +59,12 @@ p>img {
   border-radius: 0.5em;
 }
 
-.footer>a:hover {
+.footer > a:hover {
   color: #a54900;
   background-color: #ffe33a;
 }
 
-.footer>a:active {
+.footer > a:active {
   color: #fff;
   background-color: #ef313a;
 }
